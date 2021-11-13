@@ -1,0 +1,14 @@
+
+.cst{
+     
+    width:350px;
+}
+.divcustom1{
+    width:800px; 
+     
+    padding-top:50px;
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+      
+  }

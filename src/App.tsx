@@ -1,26 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import { ReactChild, ReactNode, useEffect } from "react";
+import { useSelector } from "react-redux";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory,
+} from "react-router-dom";
+import Header from "./layouts/Header";
+ 
+ import InfoLivre from "./containers/InfoLivre";
+import LivrePage from "./pages/LivrePage";
+import ChoixLivre from "./pages/ChoixLivre";
+import Home  from "./containers/Home";
+import Lecture from "./pages/Lecture en place";
+import Emprunts from "./pages/Emprunts";
+  
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+       
+
+      <Router>
+      <Header />
+           
+            <Switch>
+            
+                            
+              <Route path="/livres">
+                <LivrePage />
+              </Route>
+              <Route path="/decouvrir">
+                <ChoixLivre />
+              </Route>
+              <Route path="/lecture">
+                <Lecture />
+              </Route>
+              <Route path="/emprunts">
+                <Emprunts />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+              
+            </Switch>
+          
+         
+      </Router>
+    </>
   );
-}
+};
 
 export default App;
+
+ 
+
+ 

@@ -1,0 +1,18 @@
+.fieldwrapper{
+     width:150px;
+     }
+    .form2{
+        width:300px;
+         
+        display:flex;
+        flex-direction: row;
+        align-content: flex-start;
+    }
+    .btn{
+        width:150px !important;;
+        height:30px;
+        margin-top:28px;
+        margin-left:20px;
+        padding: 0 !important;
+    }
+     

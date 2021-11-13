@@ -1,0 +1,9 @@
+.classdiv{
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+ }
+ .formpad{
+    width:350px;
+    padding-top:50px !important;
+}

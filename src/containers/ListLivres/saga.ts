@@ -10,7 +10,6 @@ function* livreSaga() {
   yield takeLatest(ActionsTypes.REQUEST_LIVRES_LIST, requestListLivres);
 }
 function* requestListLivres() {
-   
   const options = {
     method: "GET",
     url: `${BACK_URL}livres/all`,
@@ -18,10 +17,10 @@ function* requestListLivres() {
   };
   try {
     const response: LivreResponse = yield call(makeRequest, options);
- 
+
     yield put(requestLivresSuccess(response.data));
   } catch (err) {
-   // yield put(requestUsersError());
+    // yield put(requestUsersError());
   }
 }
 

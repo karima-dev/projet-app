@@ -1,65 +1,62 @@
 import { useEffect, useState } from "react";
-import { NavItem } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import CustomAccordion from "../../components/CustomAccordion";
-import CustomButton from "../../components/CustomButton";
 import { requestEmprunts, requestRemove, requestUpdateRetour, setSelectedEmprunt } from "../InfoLivre/actions";
 import { makeSelectEmprunt, makeSelectId } from "../InfoLivre/selectors";
-import { EmpruntFormData } from "../InfoLivre/types";
-import {CODE} from "../../constants";
-import CustomForms from "../../components/CustomForms";
+import { CODE } from "../../constants";
+
+
 const empruntState = createStructuredSelector({
   listLecture: makeSelectEmprunt(),
-  idLecture:makeSelectId(),
+  idLecture: makeSelectId(),
   listLecture2: makeSelectEmprunt(),
 });
 
 
 
 const LectureList = () => {
-  const [etatClick,setEtatClick]=useState("");
-    const dispatch = useDispatch();
+  const [etatClick, setEtatClick] = useState("");
+  const dispatch = useDispatch();
   dispatch(requestEmprunts());
   const { listLecture } = useSelector(empruntState);
   const { idLecture } = useSelector(empruntState);
   const tab = Array.from(listLecture);
-   const [list, setList] = useState(tab);
-   const [erreur, setErreur] = useState("");
-   const [codeValue, setCodeValue] = useState("");
-   const handleChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
-      setCodeValue(e.target.value);
-    }
-  const handleclick=(e:any)=>{
+  const [list, setList] = useState(tab);
+  const [erreur, setErreur] = useState("");
+  const [codeValue, setCodeValue] = useState("");
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCodeValue(e.target.value);
+  }
+  const handleclick = (e: any) => {
     e.preventDefault();
-    if(!codeValue){
+    if (!codeValue) {
       setErreur("Merci de saisir le code confidentiel");
-     }
-    else if(Number(codeValue)===CODE){
-    const lelivre=tab?.filter((item) => item.livre[0].id.includes(e.target.name));
-    const emprunt=tab?.filter((item) => item.id.includes(e.target.id));
-
-    dispatch(setSelectedEmprunt(emprunt));
-     console.log("leemprunt",emprunt)
-   dispatch(requestUpdateRetour());
-    
-  dispatch(requestRemove());
-  setErreur("");
-  setCodeValue("");
     }
-    else{
+    else if (Number(codeValue) === CODE) {
+      const lelivre = tab?.filter((item) => item.livre[0].id.includes(e.target.name));
+      const emprunt = tab?.filter((item) => item.id.includes(e.target.id));
+
+      dispatch(setSelectedEmprunt(emprunt));
+      dispatch(requestUpdateRetour());
+
+      dispatch(requestRemove());
+      setErreur("");
+      setCodeValue("");
+    }
+    else {
       setErreur("Cadre réservé à l'administration");
       setCodeValue("");
     }
-}
- 
+  }
+
   useEffect(() => {
     setList(tab?.filter((item) => item.moyen.includes("lire")));
   }, [listLecture]);
 
   return (
     <>
-  
+
       {list.map((item: any, index) => (
         <>
           <CustomAccordion defaultActiveKey={index.toString()}
@@ -71,20 +68,20 @@ const LectureList = () => {
             emplacement={item.livre[0].emplacement}
             dateRetour={item.dateRetour}
             onClick={handleclick}
-             name={item.livre[0].id}
-             id={item.id}
-             text="Retourner"
-             onChange={handleChange}
-             erreur={erreur}
-             value={codeValue}
+            name={item.livre[0].id}
+            id={item.id}
+            text="Retourner"
+            onChange={handleChange}
+            erreur={erreur}
+            value={codeValue}
           />
- 
+
         </>
       ))}
-     
+
     </>
   );
 };
 export default LectureList;
- 
+
 

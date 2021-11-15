@@ -6,23 +6,24 @@ import _ from "lodash";
 const selectLivreDomain = (globalState: GlobalState): LivreState =>
   globalState.lelivre;
 
- 
-
 const makeSelectError = () =>
   createSelector(selectLivreDomain, (livreState: LivreState) =>
     _.get(livreState, "error", "")
   );
 
 const makeSelectLivres = () =>
-  createSelector(selectLivreDomain, (livreState: LivreState): Livre[] =>
-    _.get(livreState, "livres", []) as Livre[]
+  createSelector(
+    selectLivreDomain,
+    (livreState: LivreState): Livre[] =>
+      _.get(livreState, "livres", []) as Livre[]
   );
 const makeSelectedLivre = () =>
   createSelector(
     selectLivreDomain,
-    (livreState: LivreState) => _.get(livreState, "selectedLivre", []) as Livre[]
+    (livreState: LivreState) =>
+      _.get(livreState, "selectedLivre", []) as Livre[]
   );
- 
+
 const makeSelectLoading = () =>
   createSelector(selectLivreDomain, (livreState: LivreState) =>
     _.get(livreState, "loading", false)
@@ -31,5 +32,5 @@ export {
   makeSelectLivres,
   makeSelectError,
   makeSelectedLivre,
-   makeSelectLoading,
+  makeSelectLoading,
 };

@@ -57,19 +57,19 @@ const requestUpdateRetour = () => {
     type: ActionsTypes.REQUEST_UPDATE_RETOUR,
   };
 };
-const setSelectedEmprunt= (payload: EmpruntFormData[]) => {
+const setSelectedEmprunt = (payload: EmpruntFormData[]) => {
   return {
     type: ActionsTypes.SET_SELECTED_EMPRUNT,
     payload,
   };
 };
- 
+
 const requestRemove = () => {
   return {
     type: ActionsTypes.REQUEST_REMOVE,
   };
 };
- 
+
 export {
   requestEmprunts,
   requestEmpruntsSuccess,
@@ -80,5 +80,7 @@ export {
   requestLiresSuccess,
   requestUpdate,
   requestUpdateRetour,
-  setSelectedEmprunt,requestRemove,requestValidateEmprunt
- };
+  setSelectedEmprunt,
+  requestRemove,
+  requestValidateEmprunt,
+};

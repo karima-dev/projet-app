@@ -24,10 +24,10 @@ const setSelectedLivre = (payload: {}) => {
     payload,
   };
 };
- 
+
 export {
   requestLivres,
   requestLivresSuccess,
   requestLivresError,
   setSelectedLivre,
- };
+};

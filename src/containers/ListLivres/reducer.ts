@@ -2,7 +2,6 @@ import { ActionsTypes } from "./constants";
 import { LivreState } from "./types";
 
 const initialState: LivreState = {
-  
   loading: true,
   error: false,
   livres: null,
@@ -27,9 +26,8 @@ const livreReducer = (state = initialState, action: any) => {
       return {
         ...state,
         selectedLivre: action.payload,
-        
       };
-     
+
     default:
       return state;
   }

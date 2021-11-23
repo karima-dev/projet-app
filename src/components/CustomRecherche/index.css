@@ -1,0 +1,12 @@
+.field{
+     width:150px;
+     }
+    .formrecherche{
+        width:300px;
+         
+        display:flex;
+        flex-direction: row;
+        align-content: flex-start;
+    }
+    
+     

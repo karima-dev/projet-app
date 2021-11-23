@@ -8,11 +8,11 @@ const initialState: EmpruntState = {
   formData: {
     id: "",
     nameUser: null,
-    cinUser: null,
+    cinUser: "",
     dateEmprunt: new Date(),
     dateRetour: null,
     moyen: "null",
-    etatemprunt: null,
+    etatemprunt: "ouvert",
     livre: [
       {
         auteur: "",

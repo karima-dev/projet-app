@@ -1,14 +1,14 @@
 interface CustomAccordionProps {
   eventkey: string;
-  header: string;
-  title: string;
-  ean: string;
-  emplacement: string;
+  header: string | null;
+  title: string | null;
+  ean: string | null;
+  emplacement: string | null;
   onClick?: (e) => void;
   onChange?: (e) => void;
-  nombre: number;
-  dateRetour?: Date;
-  name: string;
+  nombre: number | null;
+  dateRetour?: Date | null;
+  name: string ;
   text: string;
   erreur?: string;
   value?: string;

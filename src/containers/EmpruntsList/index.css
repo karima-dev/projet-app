@@ -1,0 +1,13 @@
+.div1{
+    width: 450px !important;;
+    position: absolute;
+    top: 260px; left: 250px;
+ }
+.div2{
+    width:450px;
+    position: absolute;
+    top: 260px; left: 800px;
+ }
+ .container{
+     padding-left: 250px;
+ }

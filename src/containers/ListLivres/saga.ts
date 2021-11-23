@@ -8,6 +8,7 @@ import { ActionsTypes } from "./constants";
 
 function* livreSaga() {
   yield takeLatest(ActionsTypes.REQUEST_LIVRES_LIST, requestListLivres);
+ 
 }
 function* requestListLivres() {
   const options = {
@@ -23,5 +24,6 @@ function* requestListLivres() {
     // yield put(requestUsersError());
   }
 }
+ 
 
 export default livreSaga;

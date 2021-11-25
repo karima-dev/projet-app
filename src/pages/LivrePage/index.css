@@ -1,0 +1,8 @@
+.field {
+  width: 550px !important;
+  border: 1px solid black;
+}
+.formrecherche {
+  width: 800px !important;
+  padding-left: 500px;
+}

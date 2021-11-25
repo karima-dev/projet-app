@@ -1,52 +1,67 @@
-export const IMAGESRC="https://www.letournepage.com/wp-content/uploads/2019/12/2019.11-Lire-Local.arbre2_-1072x536-768x384.png"
+export const IMAGESRC ="https://www.letournepage.com/wp-content/uploads/2019/12/2019.11-Lire-Local.arbre2_-1072x536-768x384.png";
 
-export const chatInputProps = {
-  id: "outlined-basic-email",
-  label: "TypeSomething",
-  color: "primary",
-  ariaLabel: "add",
-  fullWidth: true,
-  value: "",
-  styles: {
-    inputStyle: {
-      padding: "20px",
+export const CODE = 123;
+
+export const buttonProps = {
+    decouvrirLivre: {
+      text: "Découvrir",
+      variant: "secondary",
     },
-    buttonStyle: {
-      textAlign: "right",
+    lire:{
+        text:"Lire sur place",
+        name:"lire",
+        variant:"secondary"
     },
-  },
-};
-export const customGridProps = [
-  {
-    styles: { textAlign: "right" },
-    text: "Hey man What's up",
-    times: "09:30",
-    key: "1",
-  },
-  {
-    styles: { textAlign: "left" },
-    text: "Hey Iam Good! What about you ?",
-    times: "09:31",
-    key: "2",
-  },
-  {
-    styles: { textAlign: "right" },
-    text: "Cool. i am good, let's catch up!",
-    times: "09:30",
-    key: "3",
-  },
-];
-export const styles = {
-  messageArea: {
-    height: "70vh",
-    overflow: "auto",
-  },
-};
-
-export enum AccountValue {
-  signIn = "signIn",
-  signUp = "signUp",
-}
-
-export const chatCollectionName = "chats";
-export const CODE=123;
+    emprunter:{
+        text:"Emprunter",
+        name:"emprunter",
+        variant:"secondary"
+    }
+  };
+  export const rechercheProps = {
+    rechercheLivre: {
+        name:"recherche",
+        type:"text",
+        placeholder:"Recherche par titre",
+    },
+  };
+  export const defaultProps = {
+    livreAffiche: {
+        src:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png",
+        title:"titre non disponible",
+        textlivre:"Non disponible",
+    },
+    customRecherche:{
+        placeholder: "text", 
+        name:"text",
+        type :"text",
+    },
+    customLivre:{
+        src:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png", 
+        title:"titre non disponible",
+        auteur :"Non disponible",
+        date :"01/01/01",
+        text :"text",
+        disponibilite :"Pas d'information",
+    },
+    customForm:{
+         placeholder:"Saisir text",
+         label :"",
+         name :"text",
+        
+    },
+    customButton:{
+        text :"Valider",
+        name :"btn",
+       
+   },
+   customAccordion:{
+    header: "Non disponible", 
+    ean:"Non disponible",
+    nombre :0,
+    emplacement :"Non disponible",
+    dateRetour :"01/01/01",
+    name :"name",
+    text :"Non disponible",
+},
+  };   

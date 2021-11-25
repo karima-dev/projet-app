@@ -5,7 +5,7 @@ import "./index.css";
 const index = () => {
   return (
     <Navbar bg="light" variant="light">
-      <Container>
+      <Container className="containernav">
         <Navbar.Brand href="/home">MaBiblio</Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="/livres">Livres</Nav.Link>

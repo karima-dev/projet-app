@@ -4,3 +4,8 @@
      margin-left:250px;
      margin-top:20px;
 }
+h1 {
+    color: rgba(172, 3, 3, 0.808);
+    text-align: center;
+    padding-top: 20px;
+  }

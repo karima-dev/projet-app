@@ -5,7 +5,8 @@ import CustomAccordion from "../../components/CustomAccordion";
 import { requestEmprunts, requestRemove, requestUpdateRetour, setSelectedEmprunt } from "../InfoLivre/actions";
 import { makeSelectEmprunt, makeSelectId } from "../InfoLivre/selectors";
 import { CODE } from "../../constants";
-
+import CustomRecherche from "../../components/CustomRecherche";
+import "./index.css"
 
 const empruntState = createStructuredSelector({
   listLecture: makeSelectEmprunt(),
@@ -16,47 +17,73 @@ const empruntState = createStructuredSelector({
 
 
 const LectureList = () => {
-  const [etatClick, setEtatClick] = useState("");
   const dispatch = useDispatch();
+  const [valeur, setValeur] = useState("");
+  const [codeValue, setCodeValue] = useState("");
+   
+  if (!valeur) {
   dispatch(requestEmprunts());
+   }
   const { listLecture } = useSelector(empruntState);
-  const { idLecture } = useSelector(empruntState);
   const tab = Array.from(listLecture);
   const [list, setList] = useState(tab);
-  const [erreur, setErreur] = useState("");
-  const [codeValue, setCodeValue] = useState("");
+   
+  const [message, setMessage] = useState([""]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCodeValue(e.target.value);
+     if (e.target.name === "code") {
+      setCodeValue(e.target.value);
+      setMessage(["",""]);
+ 
+    }
+    else if (e.target.name === "recherche") {
+      setValeur(e.target.value.toUpperCase());
+      setMessage(["",""]);
+      setList(tab?.filter((item) => item.moyen.includes("lire") && item.cinUser.includes(valeur)));
+      setCodeValue("");
+   }
+   else{
+     setCodeValue("");
+   }
   }
   const handleclick = (e: any) => {
     e.preventDefault();
     if (!codeValue) {
-      setErreur("Merci de saisir le code confidentiel");
+      setMessage(["","Merci de saisir le code confidentiel"]);
     }
     else if (Number(codeValue) === CODE) {
-      const lelivre = tab?.filter((item) => item.livre[0].id.includes(e.target.name));
-      const emprunt = tab?.filter((item) => item.id.includes(e.target.id));
+       const emprunt = tab?.filter((item) => item.id.includes(e.target.id));
 
       dispatch(setSelectedEmprunt(emprunt));
       dispatch(requestUpdateRetour());
 
       dispatch(requestRemove());
-      setErreur("");
+      setMessage(["Livre retourné avec succès",""]);
+       
       setCodeValue("");
     }
     else {
-      setErreur("Cadre réservé à l'administration");
+      setMessage(["","Cadre réservé à l'administration"]);
       setCodeValue("");
     }
   }
 
   useEffect(() => {
     setList(tab?.filter((item) => item.moyen.includes("lire")));
+      
   }, [listLecture]);
 
   return (
     <>
-
+       <CustomRecherche
+        name="recherche"
+        type="text"
+        placeholder="Recherche par cin"
+        onChange={handleChange}
+        value={valeur}
+      />
+      <br></br>
+      {<h5 className="erreur2">{message[1]}</h5>}{<h4 className="succes2">{message[0]}</h4>}
       {list.map((item: any, index) => (
         <>
           <CustomAccordion defaultActiveKey={index.toString()}
@@ -64,6 +91,7 @@ const LectureList = () => {
             header={item.nameUser}
             title={item.livre[0].titre}
             ean={item.livre[0].ean}
+            cin={item.cinUser}
             nombre={item.livre[0].nbre}
             emplacement={item.livre[0].emplacement}
             dateRetour={item.dateRetour}
@@ -72,8 +100,7 @@ const LectureList = () => {
             id={item.id}
             text="Retourner"
             onChange={handleChange}
-            erreur={erreur}
-            value={codeValue}
+             value={codeValue}
           />
 
         </>

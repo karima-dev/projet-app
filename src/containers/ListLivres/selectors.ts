@@ -24,13 +24,4 @@ const makeSelectedLivre = () =>
       _.get(livreState, "selectedLivre", []) as Livre[]
   );
 
-const makeSelectLoading = () =>
-  createSelector(selectLivreDomain, (livreState: LivreState) =>
-    _.get(livreState, "loading", false)
-  );
-export {
-  makeSelectLivres,
-  makeSelectError,
-  makeSelectedLivre,
-  makeSelectLoading,
-};
+export { makeSelectLivres, makeSelectError, makeSelectedLivre };

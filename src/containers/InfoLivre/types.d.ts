@@ -8,11 +8,11 @@ export interface EmpruntState {
 export interface EmpruntFormData {
   id: string | "";
   nameUser: string | null;
-  cinUser: string | null;
+  cinUser: string ;
   dateEmprunt: Date;
   dateRetour: Date | null;
   moyen: string;
-  etatemprunt: string | null;
+  etatemprunt: string;
   livre:
     | Livre[]
     | [

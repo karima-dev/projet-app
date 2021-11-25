@@ -1,4 +1,5 @@
 import { Button, ButtonProps } from "react-bootstrap";
+import { defaultProps } from "../../constants";
 const index = ({
   name,
   text,
@@ -18,5 +19,8 @@ const index = ({
       {text}
     </Button>
   );
+};
+index.defaultProps = {
+  ...defaultProps.customButton,
 };
 export default index;

@@ -3,5 +3,6 @@ interface CustomRechercheProps {
     placeholder?: string;
     name:string;
     type:string;
+    value:string;
     onChange?: (e) => void;
   } 

@@ -1,5 +1,4 @@
 import { takeLatest, call, put } from "redux-saga/effects";
-import { Livre } from "../../types";
 import { makeRequest } from "../../utils/request";
 import { BACK_URL } from "../../variables";
 import { LivreResponse } from "./types";
@@ -8,7 +7,6 @@ import { ActionsTypes } from "./constants";
 
 function* livreSaga() {
   yield takeLatest(ActionsTypes.REQUEST_LIVRES_LIST, requestListLivres);
- 
 }
 function* requestListLivres() {
   const options = {
@@ -21,9 +19,8 @@ function* requestListLivres() {
 
     yield put(requestLivresSuccess(response.data));
   } catch (err) {
-    // yield put(requestUsersError());
+    yield put(requestLivresError());
   }
 }
- 
 
 export default livreSaga;

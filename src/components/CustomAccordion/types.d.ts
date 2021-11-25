@@ -4,6 +4,7 @@ interface CustomAccordionProps {
   title: string | null;
   ean: string | null;
   emplacement: string | null;
+  cin:string;
   onClick?: (e) => void;
   onChange?: (e) => void;
   nombre: number | null;

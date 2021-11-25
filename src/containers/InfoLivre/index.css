@@ -6,4 +6,7 @@
  .formpad{
     width:350px;
     padding-top:50px !important;
-}
+ }
+.container{
+    padding-left: 50px !important;
+ }

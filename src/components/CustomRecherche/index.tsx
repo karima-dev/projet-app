@@ -1,9 +1,10 @@
  
+import { defaultProps } from "../../constants";
 import CustomButton from "../CustomButton";
 import CustomForms from "../CustomForms";
 import "./index.css"
 
-const index = ({  placeholder, name, onChange,type }: CustomRechercheProps) => {
+const index = ({  placeholder, name,value, onChange,type }: CustomRechercheProps) => {
 
   return (
     <>
@@ -12,6 +13,7 @@ const index = ({  placeholder, name, onChange,type }: CustomRechercheProps) => {
               className="field"
               name={name}
               type={type}
+              value={value}
               placeholder={placeholder}
               onChange={onChange}
             ></CustomForms>
@@ -20,6 +22,9 @@ const index = ({  placeholder, name, onChange,type }: CustomRechercheProps) => {
 
     </>
   );
+};
+index.defaultProps = {
+  ...defaultProps.customRecherche,
 };
 export default index;
 

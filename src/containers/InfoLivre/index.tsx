@@ -6,13 +6,17 @@ import { makeSelectedLivre } from "../ListLivres/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert, Col, Container, Row } from "react-bootstrap";
 import { champsValue } from "./constants";
-import { EventHandler, SyntheticEvent, useState } from "react";
-import { requestEmprunter, requestLire, setFormData, requestUpdate } from "./actions";
+import { useState } from "react";
+import {
+  requestEmprunter,
+  requestLire,
+  setFormData,
+  requestUpdate,
+} from "./actions";
 import { makeSelectEmprunt, makeSelectFormData } from "./selectors";
 import { nombreJours } from "../../utils/request";
-import { WSAETIMEDOUT } from "constants";
-import { watchFile } from "fs";
-
+import { buttonProps } from "../../constants";
+import "./index.css";
 const LivreState = createStructuredSelector({
   selectedLivre: makeSelectedLivre(),
 });
@@ -23,99 +27,144 @@ const empruntState = createStructuredSelector({
 
 const InfoLivre = () => {
   const { selectedLivre } = useSelector(LivreState);
-  const [dispo, setDispo] = useState("Disponible");
-  var dispo2 = "dispo";
+  var dispo = "Disponible";
   if (selectedLivre[0].nbre === 0) {
-    dispo2 = "non dispo";
+    dispo = "Non disponible";
   }
   const { formData } = useSelector(empruntState);
-  const { listInfo } = useSelector(empruntState);
   const [etat, setEtat] = useState("");
-
+  const [valeurnom, setValeurNom] = useState("");
+  const [valeurcin, setValeurCin] = useState("");
+  const [valeurdate, setValeurDate] = useState("");
   const dispatch = useDispatch();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setFormData({ name: e.target.name, value: e.target.value, livre: selectedLivre }));
-
+    switch (e.target.name) {
+      case "nom":
+        setValeurNom(e.target.value);
+        break;
+      case "cin":
+        setValeurCin(e.target.value.toUpperCase());
+        break;
+      case "date":
+        setValeurDate(e.target.value);
+        break;
+      default:
+        break;
+    }
+    dispatch(
+      setFormData({
+        name: e.target.name,
+        value: e.target.value,
+        livre: selectedLivre,
+      })
+    );
   };
 
   const handleclick = (e: any) => {
     e.preventDefault();
-    if (formData.nameUser == null || formData.cinUser == null || formData.dateRetour == null) {
+    if (
+      formData.nameUser == null ||
+      formData.cinUser == null ||
+      formData.dateRetour == null
+    ) {
       setEtat("erreur");
-
-
-    }
-    else if (nombreJours(formData.dateRetour, formData.dateEmprunt) > 5) {
+    } else if (nombreJours(formData.dateRetour, formData.dateEmprunt) > 5) {
       setEtat("erreur date sup");
-    }
-    else if (Date.parse(formData.dateRetour.toString()) < Date.parse(formData.dateEmprunt.toString())) {
+    } else if (
+      Date.parse(formData.dateRetour.toString()) <
+      Date.parse(formData.dateEmprunt.toString())
+    ) {
       setEtat("erreur date");
     }
+
     else {
       if (e.target.name === "lire") {
+        if (Date.parse(formData.dateRetour.toString()) ==
+          Date.parse(formData.dateEmprunt.toString())) {
+          dispatch(requestLire());
+          setEtat("lire clicked");
+          dispatch(requestUpdate());
+        }
+        else {
+          setEtat("meme date");
+        }
 
-        dispatch(requestLire());
-        setEtat("lire clicked");
-
-
-        dispatch(requestUpdate());
-      }
-      else if (e.target.name === "emprunter") {
-
+      } else if (e.target.name === "emprunter") {
         dispatch(requestEmprunter());
         setEtat("emprunt clicked");
       }
     }
-  }
+    setValeurNom("");
+    setValeurCin("");
+    setValeurDate("");
+  };
   const afficheMessage = () => {
-    if (etat === "lire clicked") {
-      return (
-        <Alert key="1" variant="success">
-          <h4>Bonne lecture!!!</h4>
-          <span>vous trouverez votre livre à l'emplacement {selectedLivre[0].emplacement}</span>
-        </Alert>)
-    }
-    else if (etat === "emprunt clicked") {
+     switch (etat) {
+       case "lire clicked" :
+        return (
+          <Alert key="1" variant="success">
+            <h4>Bonne lecture!!!</h4>
+            <span>
+              Vous trouverez votre livre à l'emplacement{" "}
+              {selectedLivre[0].emplacement}
+            </span>
+          </Alert>
+        )
+        break;
+     
+     case "emprunt clicked":
       return (
         <Alert key="1" variant="success">
           <h4>Votre demande est en cours de traitement</h4>
-          <span>vous trouverez votre livre à l'emplacement {selectedLivre[0].emplacement}</span>
+          <span>
+            Vous trouverez votre livre à l'emplacement{" "}
+            {selectedLivre[0].emplacement}
+          </span>
           <br></br>
-          <span>Merci de vous présenter à l'acceuil pour valider votre demande</span>
+          <span>
+            Merci de vous présenter à l'acceuil pour valider votre demande
+          </span>
+        </Alert>
+      )
+      break;
 
-        </Alert>)
-    }
-    else if (etat === "erreur") {
-      return (
-        <Alert key="1" variant="danger">
-          <h6>Merci de saisir toutes les informations!!!</h6>
-
-
-        </Alert>)
-    }
-    else if (etat === "erreur date") {
-      return (
-        <Alert key="1" variant="danger">
-          <h6>Merci de saisir la bonne date!!!</h6>
-
-
-        </Alert>)
-    }
-    else if (etat === "erreur date sup") {
-      return (
-        <Alert key="1" variant="danger">
-          <h6>Un emprunt de plus de cinq jours n'est pas autorisé!!!</h6>
-
-
-        </Alert>)
-    }
-
-
-  }
+      case "erreur" :
+        return (
+          <Alert key="1" variant="warning">
+            <h6>Merci de saisir toutes les informations!!!</h6>
+          </Alert>
+        );
+        break;
+        case "erreur date" :
+          return (
+            <Alert key="1" variant="warning">
+              <h6>Merci de saisir la bonne date!!!</h6>
+            </Alert>
+          );
+          break;
+        case "erreur date sup":
+          return (
+            <Alert key="1" variant="warning">
+              <h6>Un emprunt de plus de cinq jours n'est pas autorisé!!!</h6>
+            </Alert>
+          );
+          break;
+           case "meme date":
+            return (
+              <Alert key="1" variant="warning">
+                <h6>Pour lire sur place, Merci de choisir la date d'aujourd'hui!!!</h6>
+              </Alert>
+            ); 
+            break;
+            default:
+              break;
+     }
+         
+     
+  };
 
   return (
     <>
-
       <Container>
         {afficheMessage()}
 
@@ -125,9 +174,9 @@ const InfoLivre = () => {
               src={selectedLivre[0].src}
               title={selectedLivre[0].titre}
               auteur={selectedLivre[0].auteur}
-              date={selectedLivre[0].date}
+              date={"Date de parution: " + selectedLivre[0].date}
               text={selectedLivre[0].description}
-              disponibilite={dispo2}
+              disponibilite={dispo}
             />
           </Col>
           <Col className="formpad">
@@ -137,6 +186,7 @@ const InfoLivre = () => {
               placeholder={champsValue.champnom.placeholder}
               name={champsValue.champnom.name}
               onChange={handleChange}
+              value={valeurnom}
             />
             <CustomForms
               label={champsValue.champcin.label}
@@ -144,6 +194,7 @@ const InfoLivre = () => {
               placeholder={champsValue.champcin.placeholder}
               name={champsValue.champcin.name}
               onChange={handleChange}
+              value={valeurcin}
             />
             <CustomForms
               label={champsValue.champean.label}
@@ -151,6 +202,7 @@ const InfoLivre = () => {
               name={champsValue.champean.name}
               value={selectedLivre[0].ean}
               readOnly={true}
+
             />
             <CustomForms
               label={champsValue.champdate.label}
@@ -158,18 +210,25 @@ const InfoLivre = () => {
               placeholder={champsValue.champdate.placeholder}
               name={champsValue.champdate.name}
               onChange={handleChange}
+              value={valeurdate}
             />
-            <CustomButton name="lire" text="Lire sur place" variant="secondary" onClick={handleclick}></CustomButton>
+            <CustomButton
+              name={buttonProps.lire.name}
+              text={buttonProps.lire.text}
+              variant={buttonProps.lire.variant}
+              onClick={handleclick}
+            ></CustomButton>
 
-            <CustomButton name="emprunter" text="Emprunter" variant="secondary" onClick={handleclick}></CustomButton>
-
+            <CustomButton
+              name={buttonProps.emprunter.name}
+              text={buttonProps.emprunter.text}
+              variant={buttonProps.emprunter.variant}
+              onClick={handleclick}
+            ></CustomButton>
           </Col>
         </Row>
       </Container>
-
     </>
   );
 };
 export default InfoLivre;
-
-

@@ -1,13 +1,26 @@
 .div1{
     width: 450px !important;;
     position: absolute;
-    top: 260px; left: 250px;
+    top: 280px; left: 170px;
  }
 .div2{
     width:450px;
     position: absolute;
-    top: 260px; left: 800px;
+    top: 280px; left: 800px;
  }
- .container{
-     padding-left: 250px;
- }
+ .accordion-button{
+     background-color: rgba(241, 239, 214, 0.925) !important;
+     color:rgb(206, 111, 43) !important
+    }
+    .container{
+        padding-left:80px !important;
+    }
+    .erreur{
+        font-size:15px;
+        color:red
+    }
+    .succes{
+        font-size:15px;
+        color:green;
+    }
+ 

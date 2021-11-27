@@ -4,7 +4,7 @@ import { defaultProps } from "../../constants";
 const index = ({ src, title, textlivre, ...affichePropos }: LivreAfficheProps & CardImgProps) => {
 
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card style={{ width: '18rem' , height:'400px' }}>
       <Card.Img {...affichePropos} src={src} width="472px" height="300px" />
       <Card.Body>
         <Card.Title>{title}</Card.Title>

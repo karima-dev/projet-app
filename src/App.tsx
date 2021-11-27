@@ -9,13 +9,17 @@ import ChoixLivre from "./pages/ChoixLivre";
 import Home from "./containers/Home";
 import Lecture from "./pages/Lecture sur place";
 import Emprunts from "./pages/Emprunts";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
     <>
+          <ToastContainer theme="colored" />
+
       <Router>
         <Header />
-
+      
         <Switch>
           <Route path="/livres">
             <LivrePage />
@@ -33,7 +37,7 @@ const App = () => {
             <Home />
           </Route>
         </Switch>
-      </Router>
+       </Router>
     </>
   );
 };

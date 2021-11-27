@@ -1,21 +1,19 @@
 .nav-link {
-    color: rgba(145, 7, 7, 0.836) !important;
     padding-left: 50px !important;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 20px;
   }
    
   .bg-light {
-    background-color:rgba(221, 200, 176, 0.589) !important;
-    border-radius: 2px;
+    
   }
   .navbar-expand {
-    border: grey solid 1px;
+    border: lightgray solid 2px !important;
     border-radius: 2px;
     border-top: none;
-  }
+   }
   .navbar-brand {
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-    color: rgb(214, 107, 19) !important;
+    color: rgba(197, 91, 21, 0.836) !important;
     font-size: 30px;
   }

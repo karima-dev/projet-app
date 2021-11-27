@@ -3,5 +3,5 @@ interface CustomFormsProps {
     placeholder?: string;
     name:string;
     onChange?: (e) => void;
-     
+    key?:string;
   } 

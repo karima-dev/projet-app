@@ -1,15 +1,15 @@
 .div1{
-    width: 450px !important;;
+    width: 550px !important;;
     position: absolute;
-    top: 280px; left: 170px;
+    top: 320px; left: 170px;
  }
 .div2{
-    width:450px;
+    width:550px;
     position: absolute;
-    top: 280px; left: 800px;
+    top: 320px; left: 800px;
  }
  .accordion-button{
-     background-color: rgba(241, 239, 214, 0.925) !important;
+     background-color: rgba(245, 242, 235, 0.925) !important;
      color:rgb(206, 111, 43) !important
     }
     .container{

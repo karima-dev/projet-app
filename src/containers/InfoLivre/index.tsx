@@ -14,7 +14,7 @@ import {
   requestUpdate,
 } from "./actions";
 import { makeSelectEmprunt, makeSelectFormData } from "./selectors";
-import { nombreJours } from "../../utils/request";
+import { getDate, nombreJours } from "../../utils/request";
 import { buttonProps } from "../../constants";
 import "./index.css";
 const LivreState = createStructuredSelector({
@@ -28,14 +28,18 @@ const empruntState = createStructuredSelector({
 const InfoLivre = () => {
   const { selectedLivre } = useSelector(LivreState);
   var dispo = "Disponible";
+  var disableForm=false;
+ // const [disableForm, setDisableForm] = useState(false);
   if (selectedLivre[0].nbre === 0) {
     dispo = "Non disponible";
+    disableForm=true;
   }
   const { formData } = useSelector(empruntState);
   const [etat, setEtat] = useState("");
   const [valeurnom, setValeurNom] = useState("");
   const [valeurcin, setValeurCin] = useState("");
   const [valeurdate, setValeurDate] = useState("");
+  const [valeurdatenow, setValeurDateNow] = useState("");
   const dispatch = useDispatch();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
@@ -47,6 +51,7 @@ const InfoLivre = () => {
         break;
       case "date":
         setValeurDate(e.target.value);
+        setValeurDateNow(getDate());
         break;
       default:
         break;
@@ -62,45 +67,69 @@ const InfoLivre = () => {
 
   const handleclick = (e: any) => {
     e.preventDefault();
+    switch (e.target.name){
+      case "lire":
     if (
-      formData.nameUser == null ||
-      formData.cinUser == null ||
-      formData.dateRetour == null
+      valeurnom === "" ||
+      valeurcin === "" ||
+      valeurdate === ""
     ) {
       setEtat("erreur");
-    } else if (nombreJours(formData.dateRetour, formData.dateEmprunt) > 5) {
-      setEtat("erreur date sup");
-    } else if (
-      Date.parse(formData.dateRetour.toString()) <
-      Date.parse(formData.dateEmprunt.toString())
+     }  else if (
+      Date.parse(valeurdate) <
+      Date.parse(valeurdatenow)
     ) {
       setEtat("erreur date");
     }
-
+    else if (Date.parse(valeurdate) !=
+    Date.parse(valeurdatenow)){
+      setEtat("meme date");
+      
+    }
     else {
-      if (e.target.name === "lire") {
-        if (Date.parse(formData.dateRetour.toString()) ==
-          Date.parse(formData.dateEmprunt.toString())) {
           dispatch(requestLire());
           setEtat("lire clicked");
           dispatch(requestUpdate());
-        }
-        else {
-          setEtat("meme date");
-        }
+          
+          setValeurNom("");
+          setValeurCin("");
+          setValeurDate("");
+    }
+break;
+case "emprunter":
+    if (
+      valeurnom === "" ||
+      valeurcin === "" ||
+      valeurdate === ""
+    ) {
+      setEtat("erreur");
 
-      } else if (e.target.name === "emprunter") {
+    } else if (nombreJours(valeurdate, valeurdatenow) > 5) {
+      setEtat("erreur date sup");
+      
+    } else if (
+      Date.parse(valeurdate) <
+      Date.parse(valeurdatenow)
+    ) {
+      setEtat("erreur date");
+    }
+    
+    else {
         dispatch(requestEmprunter());
         setEtat("emprunt clicked");
-      }
+        setValeurNom("");
+        setValeurCin("");
+        setValeurDate("");
     }
-    setValeurNom("");
-    setValeurCin("");
-    setValeurDate("");
+break;
+default:
+  break;
+    }
+         
   };
   const afficheMessage = () => {
-     switch (etat) {
-       case "lire clicked" :
+    switch (etat) {
+      case "lire clicked":
         return (
           <Alert key="1" variant="success">
             <h4>Bonne lecture!!!</h4>
@@ -111,56 +140,57 @@ const InfoLivre = () => {
           </Alert>
         )
         break;
-     
-     case "emprunt clicked":
-      return (
-        <Alert key="1" variant="success">
-          <h4>Votre demande est en cours de traitement</h4>
-          <span>
-            Vous trouverez votre livre à l'emplacement{" "}
-            {selectedLivre[0].emplacement}
-          </span>
-          <br></br>
-          <span>
-            Merci de vous présenter à l'acceuil pour valider votre demande
-          </span>
-        </Alert>
-      )
-      break;
 
-      case "erreur" :
+      case "emprunt clicked":
+         
+        return (
+          <Alert key="1" variant="success">
+            <h4>Votre demande est en cours de traitement</h4>
+            <span>
+              Vous trouverez votre livre à l'emplacement{" "}
+              {selectedLivre[0].emplacement}
+            </span>
+            <br></br>
+            <span>
+              Merci de vous présenter à l'acceuil pour valider votre demande
+            </span>
+          </Alert>
+        )
+        break;
+
+      case "erreur":
         return (
           <Alert key="1" variant="warning">
             <h6>Merci de saisir toutes les informations!!!</h6>
           </Alert>
         );
         break;
-        case "erreur date" :
-          return (
-            <Alert key="1" variant="warning">
-              <h6>Merci de saisir la bonne date!!!</h6>
-            </Alert>
-          );
-          break;
-        case "erreur date sup":
-          return (
-            <Alert key="1" variant="warning">
-              <h6>Un emprunt de plus de cinq jours n'est pas autorisé!!!</h6>
-            </Alert>
-          );
-          break;
-           case "meme date":
-            return (
-              <Alert key="1" variant="warning">
-                <h6>Pour lire sur place, Merci de choisir la date d'aujourd'hui!!!</h6>
-              </Alert>
-            ); 
-            break;
-            default:
-              break;
-     }
-         
-     
+      case "erreur date":
+        return (
+          <Alert key="1" variant="warning">
+            <h6>Merci de saisir la bonne date!!!</h6>
+          </Alert>
+        );
+        break;
+      case "erreur date sup":
+        return (
+          <Alert key="1" variant="warning">
+            <h6>Un emprunt de plus de cinq jours n'est pas autorisé!!!</h6>
+          </Alert>
+        );
+        break;
+      case "meme date":
+        return (
+          <Alert key="1" variant="warning">
+            <h6>Pour lire sur place, Merci de choisir la date d'aujourd'hui!!!</h6>
+          </Alert>
+        );
+        break;
+      default:
+        break;
+    }
+
+
   };
 
   return (
@@ -187,6 +217,7 @@ const InfoLivre = () => {
               name={champsValue.champnom.name}
               onChange={handleChange}
               value={valeurnom}
+              disabled={disableForm}
             />
             <CustomForms
               label={champsValue.champcin.label}
@@ -195,6 +226,7 @@ const InfoLivre = () => {
               name={champsValue.champcin.name}
               onChange={handleChange}
               value={valeurcin}
+              disabled={disableForm}
             />
             <CustomForms
               label={champsValue.champean.label}
@@ -211,6 +243,7 @@ const InfoLivre = () => {
               name={champsValue.champdate.name}
               onChange={handleChange}
               value={valeurdate}
+              disabled={disableForm}
             />
             <CustomButton
               name={buttonProps.lire.name}

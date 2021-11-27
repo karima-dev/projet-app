@@ -10,7 +10,7 @@ const initialState: EmpruntState = {
     nameUser: null,
     cinUser: "",
     dateEmprunt: new Date(),
-    dateRetour: null,
+    dateRetour: new Date(),
     moyen: "null",
     etatemprunt: "ouvert",
     livre: [

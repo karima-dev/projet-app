@@ -64,4 +64,10 @@ export const buttonProps = {
     name :"name",
     text :"Non disponible",
 },
-  };   
+  }; 
+  export const textmessage={
+    erreurvide:"Merci de saisir le code confidentiel",
+    erreuradmin:"Cadre réservé à l'administration",
+    success:"Livre retourné avec succès",
+    successvalider:"Demande validée avec succès",
+}  

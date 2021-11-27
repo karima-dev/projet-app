@@ -13,4 +13,7 @@ interface CustomAccordionProps {
   text: string;
   erreur?: string;
   value?: string;
+  key?:string;
+  src?:string;
+  
 }

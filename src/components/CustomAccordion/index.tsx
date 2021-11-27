@@ -1,7 +1,4 @@
-import {
-  Accordion,
-  AccordionProps,
-} from "react-bootstrap";
+import { Accordion, AccordionProps } from "react-bootstrap";
 import CustomButton from "../CustomButton";
 import CustomForms from "../CustomForms";
 import "./index.css";
@@ -17,32 +14,49 @@ const index = ({
   dateRetour,
   name,
   text,
+  key,
   value,
   onClick,
   onChange,
   id,
+  src,
   erreur,
   ...propsAccordion
 }: CustomAccordionProps & AccordionProps) => {
   return (
     <Accordion defaultActiveKey={eventkey}>
       <Accordion.Item eventKey={eventkey}>
-        <Accordion.Header><h5 id="header">{"Nom: "+ header+"\u00a0"+"\u00a0"+"\u00a0"+"\u00a0"+" Cin: "+cin}</h5></Accordion.Header>
-        <Accordion.Body>
+        <Accordion.Header>
+          <h5 id="header">
+            {"Nom: " +
+              header +
+              "\u00a0" +
+              "\u00a0" +
+              "\u00a0" +
+              "\u00a0" +
+              " Cin: " +
+              cin}
+          </h5>
+        </Accordion.Header>
+        <Accordion.Body className="test">
           <ul>
-            <li><b>{title}</b></li>
+            <li>
+              <b>{title}</b>
+            </li>
             <li>{ean}</li>
             <li>{emplacement}</li>
             <li>{dateRetour}</li>
           </ul>
+          <img className="position" src={src} width="80px" height="80px" />
           <div className="form2">
             <CustomForms
               className="fieldwrapper"
-              name="code"
-              type="text"
+              type="password"
+              key={key}
               value={value}
               placeholder="Code confidentiel"
               onChange={onChange}
+              name="code"
             ></CustomForms>
             <CustomButton
               className="btn"

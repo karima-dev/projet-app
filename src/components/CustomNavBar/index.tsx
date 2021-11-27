@@ -6,7 +6,7 @@ const index = () => {
   return (
     <Navbar bg="light" variant="light">
       <Container className="containernav">
-        <Navbar.Brand href="/home">MaBiblio</Navbar.Brand>
+        <Navbar.Brand href="/home"><img src="http://www.taichi-kungfu.fr/wp-content/uploads/2016/11/Icone-eBook-Livre-Numerique-Gratuit-150-300x300.png" width="50px" height="50px" alt=""/>MaBiblio</Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="/livres">Livres</Nav.Link>
           <Nav.Link href="/emprunts">Emprunts</Nav.Link>

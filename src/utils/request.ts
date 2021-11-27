@@ -13,7 +13,7 @@ export const getDate = () => {
   return date;
 };
 
-export const nombreJours = (date2: Date, date1: Date) => {
+export const nombreJours = (date2: string, date1: string) => {
   var dateDebut, dateFin;
   dateFin = Date.parse(date2.toString());
   dateDebut = Date.parse(date1.toString());

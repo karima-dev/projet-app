@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import CustomAccordion from "../../components/CustomAccordion";
 import CustomRecherche from "../../components/CustomRecherche";
-import { CODE } from "../../constants";
+import { CODE,textmessage } from "../../constants";
 import {
   requestEmprunts,
   requestRemove,
@@ -14,6 +14,8 @@ import {
 } from "../InfoLivre/actions";
 import { makeSelectEmprunt, makeSelectId } from "../InfoLivre/selectors";
 import "./index.css";
+import { toast } from "react-toastify";
+
 const empruntState = createStructuredSelector({
   listLecture: makeSelectEmprunt(),
   idEmprunt: makeSelectId(),
@@ -34,15 +36,16 @@ const LectureList = () => {
   const [msgEncours, setMsgEncours] = useState([""]);
   const [listencours, setListencours] = useState(tab);
   const [listouvert, setListouvert] = useState(tab);
-
+ 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name != "recherche") {
-      setCodeValue(e.target.value);
+       setCodeValue(e.target.value);
       setMsgOuvert(["",""]);
       setMsgEncours(["",""]);
+  
 
     } else if (e.target.name === "recherche") {
-      setValeur(e.target.value);
+      setValeur(e.target.value.toUpperCase());
       setMsgOuvert(["",""]);
       setMsgEncours(["",""]);
       
@@ -72,15 +75,19 @@ const LectureList = () => {
       case "Valider":
         if (!codeValue) {
            setMsgOuvert(["","Merci de saisir le code confidentiel"]);
-        } else if (Number(codeValue) === CODE) {
+           toast.warning(textmessage.erreurvide);
+
+          } else if (Number(codeValue) === CODE) {
           dispatch(setSelectedEmprunt(emprunt));
           dispatch(requestValidateEmprunt());
            setMsgOuvert(["Demande validée avec succès",""]);
+           toast.success(textmessage.successvalider);
 
           setCodeValue("");
           setValeur("");
         } else {
            setMsgOuvert(["","Cadre réservé à l'administration"]);
+           toast.error(textmessage.erreuradmin);
 
           setCodeValue("");
         }
@@ -88,7 +95,9 @@ const LectureList = () => {
       case "Retourner":
         if (!codeValue) {
            setMsgEncours(["","Merci de saisir le code confidentiel"]);
-        } else if (Number(codeValue) === CODE) {
+           toast.warning(textmessage.erreurvide);
+
+          } else if (Number(codeValue) === CODE) {
           dispatch(setSelectedEmprunt(emprunt));
           dispatch(requestUpdateRetour());
 
@@ -96,9 +105,13 @@ const LectureList = () => {
            setMsgEncours(["Livre retourné avec succès",""]);
           setCodeValue("");
           setValeur("");
+          toast.success(textmessage.successvalider);
+
         } else {
            setMsgEncours(["","Cadre réservé à l'administration"]);
           setCodeValue("");
+          toast.error(textmessage.erreuradmin);
+
         }
         break;
       default:
@@ -139,10 +152,10 @@ const LectureList = () => {
       <Container>
         <Row>
           <Col>
-            <h5>Liste des emprunts à valider{"\u00a0" + "\u00a0" + "\u00a0" + "\u00a0"} {<span className="erreur">{msgOuvert[1]}</span>}{<span className="succes">{msgOuvert[0]}</span>}</h5>
+            <h5>Liste des emprunts à valider</h5>
           </Col>
           <Col>
-            <h5>Liste des emprunts en cours{"\u00a0" + "\u00a0" + "\u00a0" + "\u00a0"} {<span className="erreur">{msgEncours[1]}</span>}{<span className="succes">{msgEncours[0]}</span>}</h5>
+            <h5>Liste des emprunts en cours</h5>
           </Col>
         </Row>
 
@@ -166,6 +179,7 @@ const LectureList = () => {
               id="Valider"
               text="Valider"
               onClick={handleclick}
+              src={item.livre[0].src}
             />
           ))
 
@@ -189,6 +203,7 @@ const LectureList = () => {
               id="Retourner"
               text="Retourner"
               onClick={handleclick}
+              src={item.livre[0].src}
             />
 
           )

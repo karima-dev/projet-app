@@ -10,7 +10,7 @@ export interface EmpruntFormData {
   nameUser: string | null;
   cinUser: string ;
   dateEmprunt: Date;
-  dateRetour: Date | null;
+  dateRetour: Date ;
   moyen: string;
   etatemprunt: string;
   livre:

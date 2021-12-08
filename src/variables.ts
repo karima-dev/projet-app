@@ -1,1 +1,1 @@
-export const BACK_URL = "http://localhost:8888/";
+export const BACK_URL = "https://biblio2.herokuapp.com/";
